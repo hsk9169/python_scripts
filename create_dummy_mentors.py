@@ -40,14 +40,14 @@ f.close()
 
 num_images = 0
 length_email = 8
-img_keywords = ['헐리웃 배우']
+#img_keywords = ['헐리웃배우','미국영화배우']
+img_keywords = ['미국영화배우','헐리웃배우']
 email_list = []
 nickname_list = []
 imgUrl_list = []
 location_list = []
 gender_list = ['male', 'female']
 schedule = [{'day':'화', 'startTime':'18:00', 'endTime':'21:00'}, {'day':'금', 'startTime':'17:00', 'endTime':'22:00'}]
-topics = ['직업 고충', '회사 정보', '직업 비전']
 
 if env == 'DEV':
     url = URL_DEV
@@ -72,7 +72,7 @@ def get_random_nickname():
     return nickname
 
 def get_images_by_keyword(name):
-    driver = webdriver.Chrome(r'/Users/hans/Downloads/chromedriver')
+    driver = webdriver.Chrome(r'/Users/hans/Downloads/chromedriver 2')
     driver.get('https://www.google.co.kr/imghp?hl=ko&tab=wi&authuser=0&ogbl')
     elem = driver.find_element_by_name('q')
     elem.send_keys(name)
@@ -128,7 +128,13 @@ while True:
         gender = gender_list[age % 2]
         nickname = get_random_nickname()
         email = get_random_email_address()
-        data = dict(img=json.dumps(imgUrl_list[count%num_images]), email=json.dumps(email), age=json.dumps(str(age)), gender=json.dumps(gender), nickname=json.dumps(nickname), role=json.dumps('mentee'), job=json.dumps(job_list[count%num_jobs]), company=json.dumps(corp_list[count%num_corps]), topics=json.dumps(topics), authSelect=json.dumps('0'), isAuth=json.dumps(str(True)), introduce=json.dumps('안녕하세요! 무엇이든 물어보세요 :)'), schedules=json.dumps(schedule), cafes=json.dumps(location_list[count%num_locations]), feeSelect=json.dumps('0'), fee=json.dumps('0'))
+        fee = random.randrange(10000,50001,5000)
+        years = random.randrange(0, 6)
+        topics = []
+        for i in range(10):
+            if random.choice([True,False]):
+                topics.append(i)
+        data = dict(img=json.dumps(imgUrl_list[count%num_images]), email=json.dumps(email), age=json.dumps(str(age)), gender=json.dumps(gender), nickname=json.dumps(nickname), role=json.dumps('mentee'), job=json.dumps(job_list[count%num_jobs]), company=json.dumps(corp_list[count%num_corps]), years=json.dumps(years), topics=json.dumps(topics), authSelect=json.dumps('0'), isAuth=json.dumps('true'), title=json.dumps('안녕하세요 잘 부탁드려요 ㅎㅎ'), introduce=json.dumps('안녕하세요! 무엇이든 물어보세요 :)'), schedules=json.dumps(schedule), cafes=json.dumps(location_list[count%num_locations]), feeSelect=json.dumps('0'), fee=fee)
         headers = {'Content-Type': 'application/json'}
         response = requests.post(url, headers=headers, data=json.dumps(data))
         print(response.status_code)
