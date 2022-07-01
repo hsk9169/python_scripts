@@ -11,8 +11,8 @@ import requests
 import json
 from requests_toolbelt import MultipartEncoder
 
-URL_REAL = 'http://ec2-3-17-139-14.us-east-2.compute.amazonaws.com:8000/api/users/mentee/create'
-URL_DEV = 'http://localhost:8000/api/users/mentee/create'
+URL_REAL = 'http://ec2-3-138-140-195.us-east-2.compute.amazonaws.com:8000/api/users'
+URL_DEV = 'http://localhost:8000/api/users'
 
 env = sys.argv[1]
 num_user = sys.argv[2]
@@ -59,7 +59,7 @@ def get_random_nickname():
     return nickname
 
 def get_images_by_keyword(name):
-    driver = webdriver.Chrome(r'/Users/hans/Downloads/chromedriver')
+    driver = webdriver.Chrome(r'/Users/hans/Downloads/chromedriver 3')
     driver.get('https://www.google.co.kr/imghp?hl=ko&tab=wi&authuser=0&ogbl')
     elem = driver.find_element_by_name('q')
     elem.send_keys(name)
